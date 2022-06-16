@@ -9,6 +9,8 @@ import com.josenelson.workshopmongo.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,5 +32,9 @@ public class PostService {
     public List<Post> findByTitle(String text) {
         //return postRepository.findByTitleContainingIgnoreCase(text);
         return postRepository.searchTitle(text);
+    }
+
+    public List<Post> fullSearch(String text, Instant minDate, Instant maxDate) {
+        return postRepository.fullSearch(text, minDate, maxDate.plus(Duration.ofDays(1)));
     }
 }

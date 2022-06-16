@@ -2,6 +2,10 @@ package com.josenelson.workshopmongo.resources.util;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.TimeZone;
 
 public class URL {
     public static String decodeParam(String text) {
@@ -9,6 +13,16 @@ public class URL {
             return URLDecoder.decode(text, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             return "";
+        }
+    }
+
+    public static Instant convertDate(String text, Instant defaultValue) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        try {
+            return sdf.parse(text).toInstant();
+        } catch (ParseException e) {
+            return defaultValue;
         }
     }
 }
